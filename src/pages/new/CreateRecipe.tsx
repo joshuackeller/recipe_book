@@ -6,6 +6,7 @@ import Tiptap from "@/src/components/base/TipTap";
 import Button from "@/src/components/base/Button";
 import { clientFetch } from "@/src/utilities/clientFetch";
 import { useRouter } from "next/navigation";
+import BackButton from "@/src/components/general/BackButton";
 
 const CreateRecipe = () => {
   const router = useRouter();
@@ -30,6 +31,7 @@ const CreateRecipe = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-5">
+      <BackButton />
       <h2>Create a New Recipe</h2>
       <div className="py-2 space-y-5">
         <TextInput

@@ -1,6 +1,7 @@
 import { serverFetch } from "@/src/utilities/serverFetch";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
+import DeleteButton from "@/src/components/general/DeleteButton";
 
 interface PageProps {
   params: {
@@ -24,6 +25,9 @@ const Page = async ({ params: { recipeId } }: PageProps) => {
       {recipe?.data?.html && (
         <div dangerouslySetInnerHTML={{ __html: recipe?.data?.html }} />
       )}
+      <div>
+        <DeleteButton recipe={recipe?.data} />
+      </div>
     </div>
   );
 };

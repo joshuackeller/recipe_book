@@ -30,7 +30,8 @@ h4 {
 
 /* Basic editor styles */
 .ProseMirror {
-  > * + * {
-    margin-top: 0.75em;
-  }
+  outline: none;
+}
+.ProseMirror:focus {
+  outline: none;
 }

@@ -26,14 +26,16 @@ const TextInput = ({
     <div className={className}>
       {!!label && (
         <div className="text-xs text-gray-600">
-          {" "}
           <label htmlFor={name}>{label}</label>
         </div>
       )}
       <input
         type={type}
         name={name}
-        className={clsx("rounded border border-gray-400 p-1", inputClassName)}
+        className={clsx(
+          "rounded-lg border-2 border-black p-1 ",
+          inputClassName
+        )}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         disabled={disabled}

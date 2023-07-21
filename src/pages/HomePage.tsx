@@ -8,7 +8,7 @@ const HomePage = ({ recipes }: { recipes: any }) => {
   return (
     <div>
       <Button href="/new">Create Recipe</Button>
-      <div className="py-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-5">
+      <div className="py-5 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-5 justify-items-center">
         {(recipes as any)?.data?.map((recipe: Recipe) => (
           <Link
             className="border-2 border-black rounded-lg h-48 w-48 flex justify-center items-center hover:border-black/80 text-black/80"

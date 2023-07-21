@@ -20,14 +20,14 @@ const TipTap = ({ value, setValue }: TipTapProps) => {
       // @ts-ignore
       TextStyle.configure({ types: [ListItem.name] }),
       StarterKit.configure({
-        bulletList: {
-          keepMarks: true,
-          keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
-        },
-        orderedList: {
-          keepMarks: true,
-          keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
-        },
+        // bulletList: {
+        //   keepMarks: true,
+        //   keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
+        // },
+        // orderedList: {
+        //   keepMarks: true,
+        //   keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
+        // },
       }),
     ],
     content: value,
@@ -38,9 +38,13 @@ const TipTap = ({ value, setValue }: TipTapProps) => {
   });
 
   return (
-    <div className="border-2 border-black rounded-xl p-5">
+    <div className="border-2 border-black rounded-lg p-5">
       <MenuBar editor={editor} />
-      <EditorContent editor={editor} className="pt-2" />
+      <div className="h-0.5 bg-black w-full my-2" />
+      <EditorContent
+        editor={editor}
+        className="pt-2 ring-0 focus:ring-0 outline-none"
+      />
     </div>
   );
 };

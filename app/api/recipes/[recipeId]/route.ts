@@ -48,6 +48,7 @@ export async function PUT(
   });
 
   revalidatePath("/");
+  revalidatePath(`/recipes/${recipe.id}`);
 
   return NextResponse.json({ success: true, data: recipe });
 }

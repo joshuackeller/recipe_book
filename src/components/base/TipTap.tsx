@@ -20,16 +20,7 @@ const TipTap = ({ value, setValue }: TipTapProps) => {
       // @ts-ignore
       TextStyle.configure({ types: [ListItem.name] }),
       TextStyle,
-      StarterKit.configure({
-        // bulletList: {
-        //   keepMarks: true,
-        //   keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
-        // },
-        // orderedList: {
-        //   keepMarks: true,
-        //   keepAttributes: false, // TODO : Making this as `false` becase marks are not preserved when I try to preserve attrs, awaiting a bit of help
-        // },
-      }),
+      StarterKit,
     ],
     content: value,
     onUpdate: ({ editor }) => {
@@ -132,6 +123,9 @@ const MenuBar = ({ editor }: { editor: any }) => {
         }
       >
         temp
+      </TipTapButton>
+      <TipTapButton onClick={() => editor.chain().focus().setHardBreak().run()}>
+        line break
       </TipTapButton>
     </>
   );

@@ -35,7 +35,7 @@ const CreateRecipe = () => {
       <h2>Create a New Recipe</h2>
       <div className="py-2 space-y-5">
         <TextInput
-          inputClassName="w-full h-12 font-bold text-2xl "
+          inputClassName="w-full h-12 font-bold text-3xl "
           label="Name"
           value={name}
           setValue={setName}

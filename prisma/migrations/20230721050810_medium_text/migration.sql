@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Recipe` MODIFY `html` MEDIUMTEXT NOT NULL;

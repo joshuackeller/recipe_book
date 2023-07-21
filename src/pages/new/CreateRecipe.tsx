@@ -70,6 +70,6 @@ const INITIAL_HTML = `
 <ol>
   <li>Mix something, another, and that thing</li>
   <li>Fold in this<li>
-  <li>Bake for 30 minutes at 350</li>
+  <li>Bake for 30 minutes at 350&deg;</li>
 </ol>
 `;

@@ -5,7 +5,7 @@ import ListItem from "@tiptap/extension-list-item";
 import TextStyle from "@tiptap/extension-text-style";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, ReactNode, SetStateAction } from "react";
 import clsx from "clsx";
 
 interface TipTapProps {
@@ -19,6 +19,7 @@ const TipTap = ({ value, setValue }: TipTapProps) => {
       Color.configure({ types: [TextStyle.name, ListItem.name] }),
       // @ts-ignore
       TextStyle.configure({ types: [ListItem.name] }),
+      TextStyle,
       StarterKit.configure({
         // bulletList: {
         //   keepMarks: true,
@@ -56,180 +57,113 @@ const MenuBar = ({ editor }: { editor: any }) => {
 
   return (
     <>
-      <button
+      <TipTapButton
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
-        className={clsx(
-          "tiptap-button",
-          editor.isActive("bold") ? "is-active" : "not-active"
-        )}
+        active={editor.isActive("bold")}
       >
         bold
-      </button>
-      <button
+      </TipTapButton>
+      <TipTapButton
         onClick={() => editor.chain().focus().toggleItalic().run()}
         disabled={!editor.can().chain().focus().toggleItalic().run()}
-        className={clsx(
-          "tiptap-button",
-          editor.isActive("italic") ? "is-active" : "not-active"
-        )}
+        active={editor.isActive("italic")}
       >
         italic
-      </button>
-      <button
+      </TipTapButton>
+      <TipTapButton
         onClick={() => editor.chain().focus().toggleStrike().run()}
         disabled={!editor.can().chain().focus().toggleStrike().run()}
-        className={clsx(
-          "tiptap-button",
-          editor.isActive("strike") ? "is-active" : "not-active"
-        )}
+        active={editor.isActive("strike")}
       >
         strike
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleCode().run()}
-        disabled={!editor.can().chain().focus().toggleCode().run()}
-        className={clsx(
-          "tiptap-button",
-          editor.isActive("code") ? "is-active" : "not-active"
-        )}
-      >
-        code
-      </button>
-      <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
-        clear marks
-      </button>
-      <button onClick={() => editor.chain().focus().clearNodes().run()}>
-        clear nodes
-      </button>
-      <button
+      </TipTapButton>
+
+      <TipTapButton
         onClick={() => editor.chain().focus().setParagraph().run()}
-        className={clsx(
-          "tiptap-button",
-          editor.isActive("paragraph") ? "is-active" : "not-active"
-        )}
+        active={editor.isActive("paragraph")}
       >
         paragraph
-      </button>
-      <button
+      </TipTapButton>
+      <TipTapButton
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        className={clsx(
-          "tiptap-button",
-          editor.isActive("heading", { level: 1 }) ? "is-active" : "not-active"
-        )}
+        active={editor.isActive("heading", { level: 1 })}
       >
         h1
-      </button>
-      <button
+      </TipTapButton>
+      <TipTapButton
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className={clsx(
-          "tiptap-button",
-          editor.isActive("heading", { level: 2 }) ? "is-active" : "not-active"
-        )}
+        active={editor.isActive("heading", { level: 2 })}
       >
         h2
-      </button>
-      <button
+      </TipTapButton>
+      <TipTapButton
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        className={clsx(
-          "tiptap-button",
-          editor.isActive("heading", { level: 3 }) ? "is-active" : "not-active"
-        )}
+        active={editor.isActive("heading", { level: 3 })}
       >
         h3
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-        className={clsx(
-          "tiptap-button",
-          editor.isActive("heading", { level: 4 }) ? "is-active" : "not-active"
-        )}
-      >
-        h4
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-        className={clsx(
-          "tiptap-button",
-          editor.isActive("heading", { level: 5 }) ? "is-active" : "not-active"
-        )}
-      >
-        h5
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-        className={clsx(
-          "tiptap-button",
-          editor.isActive("heading", { level: 6 }) ? "is-active" : "not-active"
-        )}
-      >
-        h6
-      </button>
-      <button
+      </TipTapButton>
+
+      <TipTapButton
         onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={clsx(
-          "tiptap-button",
-          editor.isActive("bulletList") ? "is-active" : "not-active"
-        )}
+        active={editor.isActive("bulletList")}
       >
         bullet list
-      </button>
-      <button
+      </TipTapButton>
+      <TipTapButton
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={clsx(
-          "tiptap-button",
-          editor.isActive("orderedList") ? "is-active" : "not-active"
-        )}
+        active={editor.isActive("orderedList")}
       >
         ordered list
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-        className={clsx(
-          "tiptap-button",
-          editor.isActive("codeBlock") ? "is-active" : "not-active"
-        )}
+      </TipTapButton>
+
+      <TipTapButton
+        onClick={() => editor.chain().focus().setHorizontalRule().run()}
       >
-        code block
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        className={clsx(
-          "tiptap-button",
-          editor.isActive("blockquote") ? "is-active" : "not-active"
-        )}
-      >
-        blockquote
-      </button>
-      <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
         horizontal rule
-      </button>
-      <button onClick={() => editor.chain().focus().setHardBreak().run()}>
-        hard break
-      </button>
-      <button
-        onClick={() => editor.chain().focus().undo().run()}
-        disabled={!editor.can().chain().focus().undo().run()}
-      >
-        undo
-      </button>
-      <button
-        onClick={() => editor.chain().focus().redo().run()}
-        disabled={!editor.can().chain().focus().redo().run()}
-      >
-        redo
-      </button>
-      <button
-        onClick={() => editor.chain().focus().setColor("#958DF1").run()}
-        className={
-          editor.isActive("textStyle", { color: "#958DF1" })
-            ? "is-active"
-            : "not-active"
+      </TipTapButton>
+      <TipTapButton
+        onClick={() =>
+          editor
+            .chain()
+            .focus()
+            .insertContent(`<span style="">&deg;</span>`)
+            .run()
         }
       >
-        purple
-      </button>
+        temp
+      </TipTapButton>
     </>
+  );
+};
+
+interface TipTapButtonProps {
+  onClick: () => any;
+  children: ReactNode;
+  active?: boolean;
+  className?: string;
+  disabled?: boolean;
+}
+
+const TipTapButton = ({
+  onClick,
+  children,
+  active,
+  className,
+  disabled,
+}: TipTapButtonProps) => {
+  return (
+    <button
+      onClick={onClick}
+      className={clsx(
+        "p-1 border-2 rounded-lg m-1",
+        className,
+        active ? "border-black text-black" : "border-black/60 text-black/60"
+      )}
+      disabled={disabled}
+    >
+      {children}
+    </button>
   );
 };
 

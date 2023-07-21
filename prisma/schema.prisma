@@ -33,7 +33,7 @@ model AccessCode {
 model Recipe {
   id     Int    @id @default(autoincrement())
   name   String
-  html   String
+  html   String @db.MediumText
   userId Int
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 

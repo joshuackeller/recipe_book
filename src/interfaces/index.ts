@@ -21,10 +21,19 @@ export interface AccessCode {
 
 export interface Recipe {
   id: number;
-  title: string;
+  name: string;
   html: string;
   userId: number;
   user: User;
+  tags: Tag[];
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface Tag {
+  id: number;
+  name: string;
+  userId?: number;
+  user?: User;
+  recipe?: Recipe[];
 }

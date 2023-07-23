@@ -16,6 +16,7 @@ model User {
   phone      String      @unique
   accessCode AccessCode?
   recipes    Recipe[]
+  tags       Tag[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -36,9 +37,20 @@ model Recipe {
   html   String @db.MediumText
   userId Int
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tags   Tag[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([id, userId])
+}
+
+model Tag {
+  id      Int      @id @default(autoincrement())
+  name    String
+  userId  Int
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipes Recipe[]
 
   @@unique([id, userId])
 }

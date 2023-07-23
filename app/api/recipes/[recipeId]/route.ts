@@ -21,6 +21,14 @@ export async function GET(
         id: parseInt(recipeId),
       },
     },
+    include: {
+      tags: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
   });
 
   return NextResponse.json({ success: true, data: recipe });

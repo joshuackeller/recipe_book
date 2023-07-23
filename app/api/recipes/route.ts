@@ -19,8 +19,6 @@ export async function GET(req: NextRequest) {
     name: search ? { contains: search } : undefined,
   };
 
-  console.log(where);
-
   const recipes = await prisma.recipe.findMany({
     where,
     take: 25,

@@ -81,46 +81,53 @@ const HomePage = ({ preRenderRecipes }: HomePageProps) => {
   return (
     <div>
       <div className="flex gap-2 justify-between">
-        <div className="flex-1">
-          <TextInput
-            value={search}
-            setValue={setSearch}
-            inputClassName="w-full placeholder:text-sm text-sm py-1.5"
-            placeholder="Search..."
+        <TextInput
+          value={search}
+          setValue={setSearch}
+          className="w-full"
+          inputClassName="w-full placeholder:text-sm text-sm py-1.5"
+          placeholder="Search..."
+        />
+        <div>
+          <Link href="/new">
+            <div className="bg-black hover:bg-black/80 p-2 rounded-lg">
+              <PlusIcon className="h-5 w-5 text-white" />
+            </div>
+          </Link>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-1 text-sm py-2">
+        {tags?.map((tag) => (
+          <Tag
+            tag={tag}
+            key={tag.id}
+            onClick={removeTag}
+            className="cursor-pointer "
           />
-          <div className="flex items-center gap-1 text-sm py-1">
-            {tags?.map((tag) => (
+        ))}
+        {!!searchTags && searchTags.length > 0 && (
+          <>
+            <span>Add Filters </span>
+            {searchTags?.map((tag) => (
               <Tag
                 tag={tag}
                 key={tag.id}
-                onClick={removeTag}
-                className="cursor-pointer"
+                className="cursor-pointer bg-black/70 hover:bg-black"
+                onClick={(tag) => {
+                  setTags([...tags, tag]);
+                  setSearch("");
+                }}
               />
             ))}
-            {!!searchTags && searchTags.length > 0 && (
-              <>
-                <span>Add Filter </span>
-                {searchTags?.map((tag) => (
-                  <Tag
-                    tag={tag}
-                    key={tag.id}
-                    className="cursor-pointer"
-                    onClick={(tag) => setTags([...tags, tag])}
-                  />
-                ))}
-              </>
-            )}
-          </div>
-        </div>
-
-        <Button href="/new" className="px-2">
-          <PlusIcon className="h-5 w-5" />
-        </Button>
+          </>
+        )}
       </div>
-      <div className="py-5 grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-5 ">
+
+      <div className="py-5 flex flex-wrap gap-5">
         {recipes.map((recipe: Recipe) => (
           <Link
-            className="border-2 border-black rounded-lg h-48 w-48 flex justify-center items-center hover:border-black/80 text-black/80"
+            className="border-2 border-black rounded-lg h-[150px] max-w-[150px] w-full flex justify-center items-center hover:border-black/80 text-black/80"
             href={`/recipes/${recipe.id}`}
             key={recipe.id}
           >
@@ -131,5 +138,7 @@ const HomePage = ({ preRenderRecipes }: HomePageProps) => {
     </div>
   );
 };
+
+// grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-5
 
 export default HomePage;

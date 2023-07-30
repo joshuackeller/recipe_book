@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import Authorize from "@/src/utilities/Authorize";
 import prisma from "@/src/utilities/client";
 
-export async function GET(req: Request) {
+export async function GET(_req: Request) {
   const userId = await Authorize();
   const user = await prisma.user.findUniqueOrThrow({
     where: {

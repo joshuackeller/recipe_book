@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "interfaces": "npx @kalissaac/prisma-typegen . ./prisma/schema.prisma"
+    "interfaces": "npx @kalissaac/prisma-typegen ./src/interfaces ./prisma/schema.prisma"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

@@ -5,8 +5,8 @@ export default async function Home() {
   const recipes = await serverFetch.get("http://localhost:3000/api/recipes");
 
   return (
-    <main className="max-w-4xl mx-auto p-5">
+    <div>
       <HomePage preRenderRecipes={recipes?.data} />
-    </main>
+    </div>
   );
 }

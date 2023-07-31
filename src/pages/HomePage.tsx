@@ -3,7 +3,11 @@
 import Button from "../components/base/Button";
 import Link from "next/link";
 import TextInput from "../components/base/fields/TextInput";
-import { PlusIcon } from "@heroicons/react/24/solid";
+import {
+  BeakerIcon,
+  PlusIcon,
+  WrenchScrewdriverIcon,
+} from "@heroicons/react/24/solid";
 import { clientFetch } from "@/src/utilities/clientFetch";
 import { useEffect, useState } from "react";
 import { Recipe, Tag as TagProp } from "@/src/interfaces";
@@ -64,9 +68,9 @@ const HomePage = ({ preRenderRecipes }: HomePageProps) => {
   useEffect(() => {
     getSearchTags();
     getRecipes();
-    const findTag = searchTags.find((tag) => {
-      return tag.name.toLowerCase() === search.toLowerCase();
-    });
+    // const findTag = searchTags.find((tag) => {
+    //   return tag.name.toLowerCase() === search.toLowerCase();
+    // });
   }, [search, tags]);
 
   const removeTag = (tag: TagProp) => {
@@ -80,7 +84,7 @@ const HomePage = ({ preRenderRecipes }: HomePageProps) => {
 
   return (
     <div>
-      <div className="flex gap-2 justify-between">
+      <div className="flex items-center gap-2 justify-between">
         <TextInput
           value={search}
           setValue={setSearch}
@@ -88,11 +92,9 @@ const HomePage = ({ preRenderRecipes }: HomePageProps) => {
           inputClassName="w-full placeholder:text-sm text-sm py-1.5"
           placeholder="Search..."
         />
-        <div>
-          <Link href="/new">
-            <div className="bg-black hover:bg-black/80 p-2 rounded-lg">
-              <PlusIcon className="h-5 w-5 text-white" />
-            </div>
+        <div className="p-2">
+          <Link href="/settings">
+            <WrenchScrewdriverIcon className="h-5 w-5 " />
           </Link>
         </div>
       </div>
@@ -125,6 +127,12 @@ const HomePage = ({ preRenderRecipes }: HomePageProps) => {
       </div>
 
       <div className="py-5 flex flex-wrap gap-5">
+        <Link
+          href="/new"
+          className="border-2 border-black bg-black rounded-lg h-[150px] max-w-[150px] w-full flex justify-center items-center hover:border-black/80 text-black/80"
+        >
+          <BeakerIcon className="h-10 w-10 text-white" />
+        </Link>
         {recipes.map((recipe: Recipe) => (
           <Link
             className="border-2 border-black rounded-lg h-[150px] max-w-[150px] w-full flex justify-center items-center hover:border-black/80 text-black/80"

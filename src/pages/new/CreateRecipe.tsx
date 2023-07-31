@@ -34,7 +34,7 @@ const CreateRecipe = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-5">
+    <div>
       <BackButton />
       <h2>Create a New Recipe</h2>
       <div className="py-2 space-y-5">

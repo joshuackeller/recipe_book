@@ -51,7 +51,7 @@ const AuthFlowItems = ({ setToken }: AuthFlowProps) => {
         phone: "+1" + phone,
       })
       .then(() => {
-        router.push(`/${pathname}?authFlow=${AuthFlow.signin}`);
+        router.push(`${pathname}?authFlow=${AuthFlow.signin}`);
       });
   };
 
@@ -79,7 +79,8 @@ const AuthFlowItems = ({ setToken }: AuthFlowProps) => {
               <h2 className="text-center mb-2">Request Code</h2>
               <TextInput
                 // error={!!phone && !/^[0-9]{10}$/.test(phone)}
-                className="w-full"
+
+                inputClassName="w-full"
                 name="Phone"
                 label="Phone"
                 type="text"
@@ -95,7 +96,7 @@ const AuthFlowItems = ({ setToken }: AuthFlowProps) => {
       return (
         <div className="flex justify-center py-20">
           <Card className="p-5 w-full max-w-sm">
-            <form onSubmit={handleSignin}>
+            <form onSubmit={handleSignin} className="space-y-2">
               <h2 className="text-center mb-2">Sign In</h2>
               <TextInput
                 //   error={!!phone && !/^[0-9]{10}$/.test(phone)}

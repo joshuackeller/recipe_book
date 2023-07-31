@@ -37,7 +37,7 @@ const TextInput = ({
         type={type}
         name={name}
         className={clsx(
-          "rounded-lg border-2 border-black p-1 ",
+          "w-full rounded-lg border-2 border-black p-1 ",
           inputClassName
         )}
         value={value}

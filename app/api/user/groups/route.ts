@@ -20,7 +20,8 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const userId = await Authorize();
-  const { name } = await req.json();
+
+  const { name, autoAddRecipes } = await req.json();
 
   if (!name || name.length < 1) {
     return NextResponse.json(
@@ -29,16 +30,17 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const team = await prisma.group.create({
+  const group = await prisma.group.create({
     data: {
       name,
       users: {
         create: {
           userId,
+          autoAddRecipes,
         },
       },
     },
   });
 
-  return NextResponse.json({ success: true, data: team });
+  return NextResponse.json({ success: true, data: group });
 }

@@ -18,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AuthWrapper>{children}</AuthWrapper>
+        <AuthWrapper>
+          <div className="max-w-4xl mx-auto p-5">{children}</div>
+        </AuthWrapper>
       </body>
     </html>
   );

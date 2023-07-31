@@ -1,4 +1,4 @@
-import HomePage from "@/src/pages/HomePage";
+import HomePage from "@/src/srcPages/HomePage";
 import { serverFetch } from "@/src/utilities/serverFetch";
 
 export default async function Home() {

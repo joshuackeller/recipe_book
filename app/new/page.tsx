@@ -1,4 +1,4 @@
-import CreateRecipe from "@/src/pages/new/CreateRecipe";
+import CreateRecipe from "@/src/srcPages/new/CreateRecipe";
 
 const Page = () => {
   return <CreateRecipe />;

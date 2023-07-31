@@ -1,8 +1,5 @@
 import { serverFetch } from "@/src/utilities/serverFetch";
-import Link from "next/link";
-import { ArrowLeftIcon } from "@heroicons/react/24/solid";
-import DeleteButton from "@/src/components/general/DeleteButton";
-import SingleRecipePage from "@/src/pages/recipes/SingleRecipePage";
+import SingleRecipePage from "@/src/srcPages/recipes/SingleRecipePage";
 
 interface PageProps {
   params: {
@@ -11,9 +8,7 @@ interface PageProps {
 }
 
 const Page = async ({ params: { recipeId } }: PageProps) => {
-  const recipe = await serverFetch.get(
-    `/recipes/${recipeId}`
-  );
+  const recipe = await serverFetch.get(`/recipes/${recipeId}`);
 
   return <SingleRecipePage recipe={recipe?.data} />;
 };

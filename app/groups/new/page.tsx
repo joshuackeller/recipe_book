@@ -1,4 +1,4 @@
-import CreateGroup from "@/src/pages/groups/CreateGroup";
+import CreateGroup from "@/src/srcPages/groups/CreateGroup";
 
 const Page = () => {
   return <CreateGroup />;

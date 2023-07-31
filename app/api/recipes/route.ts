@@ -6,10 +6,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   const userId = await Authorize();
-  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
-  
-  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
-  
+  if (!userId)
+    return NextResponse.json(
+      { success: false, message: "Invalid token" },
+      { status: 403 }
+    );
 
   const search = req.nextUrl.searchParams.get("search");
   const stringTagIds = req.nextUrl.searchParams.get("tagIds");
@@ -33,8 +34,11 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: Request) {
   const userId = await Authorize();
-  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
-  
+  if (!userId)
+    return NextResponse.json(
+      { success: false, message: "Invalid token" },
+      { status: 403 }
+    );
 
   const { name, html, tags } = await req.json();
 

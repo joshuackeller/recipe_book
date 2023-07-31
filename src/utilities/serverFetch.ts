@@ -6,7 +6,7 @@ interface ServerFetchOptions extends RequestInit {
   json?: boolean;
 }
 
-const BASE_URL = process.env.API_URL
+const BASE_URL = process.env.API_URL;
 
 export const serverFetch = async (
   url: string,

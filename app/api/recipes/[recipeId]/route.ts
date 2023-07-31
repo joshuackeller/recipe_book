@@ -13,16 +13,13 @@ export async function GET(
   _req: Request,
   { params: { recipeId } }: ContextProps
 ) {
-  console.log(1);
   const userId = await Authorize();
-  console.log(2);
   if (!userId)
     return NextResponse.json(
       { success: false, message: "Invalid token" },
       { status: 403 }
     );
 
-  console.log(3);
   const recipe = await prisma.recipe.findUniqueOrThrow({
     where: {
       id_userId: {
@@ -39,7 +36,6 @@ export async function GET(
       },
     },
   });
-  console.log(4);
 
   return NextResponse.json({ success: true, data: recipe });
 }

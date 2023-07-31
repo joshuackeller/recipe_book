@@ -12,7 +12,7 @@ interface PageProps {
 
 const Page = async ({ params: { recipeId } }: PageProps) => {
   const recipe = await serverFetch.get(
-    `http://localhost:3000/api/recipes/${recipeId}`
+    `/recipes/${recipeId}`
   );
 
   return <SingleRecipePage recipe={recipe?.data} />;

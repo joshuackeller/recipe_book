@@ -24,7 +24,7 @@ const SingleRecipePage = ({ recipe }: SingleRecipePageProps) => {
 
   const saveRecipe = () => {
     clientFetch
-      .put(`/api/recipes/${recipe.id}`, { name, html })
+      .put(`/recipes/${recipe.id}`, { name, html })
       .then(() => setEdit(false));
   };
 

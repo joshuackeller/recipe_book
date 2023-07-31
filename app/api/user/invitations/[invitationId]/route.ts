@@ -13,6 +13,8 @@ export async function GET(
   { params: { invitationId } }: ContextParams
 ) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
 
   const user = await prisma.user.findUniqueOrThrow({ where: { id: userId } });
 
@@ -31,6 +33,8 @@ export async function POST(
   { params: { invitationId } }: ContextParams
 ) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
 
   const user = await prisma.user.findUniqueOrThrow({ where: { id: userId } });
 
@@ -61,6 +65,8 @@ export async function DELETE(
   { params: { invitationId } }: ContextParams
 ) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
 
   const user = await prisma.user.findUniqueOrThrow({ where: { id: userId } });
 

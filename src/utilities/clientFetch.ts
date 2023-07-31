@@ -4,6 +4,8 @@ interface ClientFetchOptions extends RequestInit {
   json?: boolean;
 }
 
+const BASE_URL = "/api"
+
 export const clientFetch = async (
   url: string,
   method: HttpMethod,
@@ -14,7 +16,7 @@ export const clientFetch = async (
     token = localStorage.getItem("token");
   }
 
-  const response = await fetch(url, {
+  const response = await fetch(BASE_URL + url, {
     method,
     ...options,
     headers: {

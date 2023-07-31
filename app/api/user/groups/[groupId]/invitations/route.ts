@@ -13,6 +13,8 @@ export async function GET(
   { params: { groupId } }: ContextParams
 ) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
 
   const invitations = await prisma.groupInvite.findMany({
     where: {
@@ -35,6 +37,8 @@ export async function POST(
   { params: { groupId } }: ContextParams
 ) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
 
   const { phone } = await req.json();
 

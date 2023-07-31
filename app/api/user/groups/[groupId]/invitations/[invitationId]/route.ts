@@ -14,6 +14,8 @@ export async function GET(
   { params: { groupId, invitationId } }: ContextParams
 ) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
 
   const invitation = await prisma.groupInvite.findUniqueOrThrow({
     where: {
@@ -37,6 +39,8 @@ export async function DELETE(
   { params: { groupId, invitationId } }: ContextParams
 ) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
 
   prisma.groupInvite.delete({
     where: {

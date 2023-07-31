@@ -4,6 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
 
   const groups = await prisma.group.findMany({
     where: {
@@ -20,6 +22,8 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
 
   const { name, autoAddRecipes } = await req.json();
 

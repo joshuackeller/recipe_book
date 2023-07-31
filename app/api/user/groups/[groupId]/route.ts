@@ -13,6 +13,8 @@ export async function GET(
   { params: { groupId } }: ContextParams
 ) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
 
   const group = await prisma.group.findUniqueOrThrow({
     where: {
@@ -33,6 +35,8 @@ export async function PUT(
   { params: { groupId } }: ContextParams
 ) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
 
   const name = await req.json();
 
@@ -65,6 +69,8 @@ export async function DELETE(
   { params: { groupId } }: ContextParams
 ) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
 
   await prisma.group.delete({
     where: {

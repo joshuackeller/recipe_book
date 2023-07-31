@@ -3,7 +3,6 @@
 import {
   Dispatch,
   FormEvent,
-  ReactNode,
   SetStateAction,
   useEffect,
   useState,
@@ -47,7 +46,7 @@ const AuthFlowItems = ({ setToken }: AuthFlowProps) => {
   const handleRequestCode = (e: FormEvent) => {
     e.preventDefault();
     clientFetch
-      .post("/api/auth/request_code", {
+      .post("/auth/request_code", {
         phone: "+1" + phone,
       })
       .then(() => {
@@ -58,7 +57,7 @@ const AuthFlowItems = ({ setToken }: AuthFlowProps) => {
   const handleSignin = (e: FormEvent) => {
     e.preventDefault();
     clientFetch
-      .post("/api/auth/sign_in", {
+      .post("/auth/sign_in", {
         phone: "+1" + phone,
         code,
       })

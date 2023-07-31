@@ -21,7 +21,7 @@ const AddTags = ({ recipeId, tags, setTags }: AddTagsProps) => {
 
   const getSearchTags = () => {
     clientFetch
-      .get(`/api/tags${!!search ? `?search=${search}` : ""}`)
+      .get(`/tags${!!search ? `?search=${search}` : ""}`)
       .then((response) => {
         if (!!response.data) {
           let preFilterSearchTags = response.data;
@@ -51,7 +51,7 @@ const AddTags = ({ recipeId, tags, setTags }: AddTagsProps) => {
 
   const createTag = () => {
     if (recipeId) {
-      clientFetch.post("/api/tags", {
+      clientFetch.post("/tags", {
         name: search,
         recipeId,
       });
@@ -70,7 +70,7 @@ const AddTags = ({ recipeId, tags, setTags }: AddTagsProps) => {
 
   const addTag = (tag: TagProp) => {
     if (recipeId) {
-      clientFetch.post(`/api/recipes/${recipeId}/tags/${tag.id}`);
+      clientFetch.post(`/recipes/${recipeId}/tags/${tag.id}`);
     }
     setTags([
       ...tags,
@@ -84,7 +84,7 @@ const AddTags = ({ recipeId, tags, setTags }: AddTagsProps) => {
 
   const removeTag = (tag: TagProp) => {
     if (recipeId) {
-      clientFetch.delete(`/api/recipes/${recipeId}/tags/${tag.id}`);
+      clientFetch.delete(`/recipes/${recipeId}/tags/${tag.id}`);
     }
     const preDeleteTags = JSON.parse(JSON.stringify(tags));
     const tagId = preDeleteTags.find(

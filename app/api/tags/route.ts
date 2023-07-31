@@ -5,6 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   const search = req.nextUrl.searchParams.get("search");
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
   const tags = await prisma.tag.findMany({
     where: {
       userId,
@@ -18,6 +20,8 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: Request) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
 
   const { name, recipeId } = await req.json();
 

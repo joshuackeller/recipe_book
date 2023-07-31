@@ -14,6 +14,8 @@ export async function GET(
   { params: { recipeId } }: ContextProps
 ) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
   const recipe = await prisma.recipe.findUniqueOrThrow({
     where: {
       id_userId: {
@@ -39,6 +41,8 @@ export async function PUT(
   { params: { recipeId } }: ContextProps
 ) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
 
   const { name, html } = await req.json();
 
@@ -66,6 +70,8 @@ export async function DELETE(
   { params: { recipeId } }: ContextProps
 ) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
   await prisma.recipe.delete({
     where: {
       id_userId: {

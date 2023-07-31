@@ -17,7 +17,7 @@ const DeleteButton = ({ recipe }: DeleteButtonProps) => {
   const router = useRouter();
 
   const deleteRecipe = (e: MouseEvent) => {
-    clientFetch.delete(`/api/recipes/${recipe.id}`).then(() => {
+    clientFetch.delete(`/recipes/${recipe.id}`).then(() => {
       router.push("/");
     });
   };

@@ -19,7 +19,7 @@ const CreateRecipe = () => {
   const createRecipe = (e: MouseEvent) => {
     e.preventDefault();
     clientFetch
-      .post("/api/recipes", {
+      .post("/recipes", {
         name,
         html,
         tags,

@@ -6,6 +6,8 @@ interface ServerFetchOptions extends RequestInit {
   json?: boolean;
 }
 
+const BASE_URL = process.env.API_URL
+
 export const serverFetch = async (
   url: string,
   method: HttpMethod,
@@ -14,7 +16,7 @@ export const serverFetch = async (
   const tokenCookie = cookies().get("token");
   const token = tokenCookie?.value;
 
-  const response = await fetch(url, {
+  const response = await fetch(BASE_URL + url, {
     method,
     ...options,
     headers: {

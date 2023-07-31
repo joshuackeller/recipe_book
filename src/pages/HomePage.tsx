@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { Recipe, Tag as TagProp } from "@/src/interfaces";
 import Tag from "../components/base/Tag";
 
-const API_BASE = "/api/recipes";
+const API_BASE = "/recipes";
 
 interface HomePageProps {
   preRenderRecipes: Recipe[];
@@ -28,7 +28,7 @@ const HomePage = ({ preRenderRecipes }: HomePageProps) => {
 
   const getSearchTags = () => {
     clientFetch
-      .get(`/api/tags${!!search ? `?search=${search}` : ""}`)
+      .get(`/tags${!!search ? `?search=${search}` : ""}`)
       .then((response) => {
         if (!!response.data) {
           let preFilterSearchTags = response.data;

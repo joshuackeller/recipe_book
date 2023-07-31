@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
@@ -67,7 +67,7 @@ model AccessCode {
 model Recipe {
   id     Int    @id @default(autoincrement())
   name   String
-  html   String @db.MediumText
+  html   String
   userId Int
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   tags   Tag[]

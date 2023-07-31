@@ -10,6 +10,8 @@ interface ContextProps {
 
 export async function GET(_req: Request, { params: { tagId } }: ContextProps) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
   const tag = await prisma.tag.findUniqueOrThrow({
     where: {
       id_userId: {
@@ -24,6 +26,8 @@ export async function GET(_req: Request, { params: { tagId } }: ContextProps) {
 
 export async function PUT(req: Request, { params: { tagId } }: ContextProps) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
 
   const { name } = await req.json();
 
@@ -53,6 +57,8 @@ export async function DELETE(
   { params: { tagId } }: ContextProps
 ) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
 
   const tag = await prisma.tag.delete({
     where: {

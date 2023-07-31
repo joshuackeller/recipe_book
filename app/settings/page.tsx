@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const Page = async () => {
   const { data: groups } = await serverFetch.get(
-    "http://localhost:3000/api/user/groups"
+    "/user/groups"
   );
 
   console.log(groups);

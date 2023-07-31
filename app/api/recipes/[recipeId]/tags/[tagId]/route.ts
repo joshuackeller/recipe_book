@@ -14,6 +14,8 @@ export async function POST(
   { params: { tagId, recipeId } }: ContextProps
 ) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
   await prisma.tag.update({
     where: {
       id_userId: {
@@ -41,6 +43,8 @@ export async function DELETE(
   { params: { tagId, recipeId } }: ContextProps
 ) {
   const userId = await Authorize();
+  if(!userId)  return NextResponse.json({success: false, message: "Invalid token"}, {status: 403})
+  
   await prisma.tag.update({
     where: {
       id_userId: {

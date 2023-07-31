@@ -59,11 +59,11 @@ const AddTags = ({ recipeId, tags, setTags }: AddTagsProps) => {
     setTags([
       ...tags,
       {
-        id: tags.length + 10000,
+        id: tags.length + 100000,
         name: search,
         userId: 1,
       },
-    ]);
+    ] as any);
 
     setSearch("");
   };
@@ -78,7 +78,7 @@ const AddTags = ({ recipeId, tags, setTags }: AddTagsProps) => {
         id: tag.id,
         name: tag.name,
       },
-    ]);
+    ] as any);
     setSearch("");
   };
 

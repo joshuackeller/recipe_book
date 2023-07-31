@@ -36,6 +36,7 @@ export interface Group {
 }
 
 export interface GroupInvite {
+    id: number,
     phone: string,
     groupId: number,
     group: Group,

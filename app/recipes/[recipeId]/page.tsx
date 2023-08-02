@@ -9,9 +9,9 @@ interface PageProps {
 
 const Page = async ({ params: { recipeId } }: PageProps) => {
   let errorMessage;
-  let recipe;
+  let recipe = await serverFetch.get(`/recipes/${recipeId}`);
   try {
-    recipe = await serverFetch.get(`/recipes/${recipeId}`);
+    await serverFetch.get(`/recipes/${recipeId}`);
   } catch (error) {
     errorMessage = error;
   }

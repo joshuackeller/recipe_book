@@ -13,12 +13,15 @@ export async function GET(
   _req: Request,
   { params: { recipeId } }: ContextProps
 ) {
-  const userId = await Authorize();
-  if (!userId)
+  let userId;
+  try {
+    userId = await Authorize();
+  } catch (error) {
     return NextResponse.json(
-      { success: false, message: "Invalid token" },
+      { success: false, message: "Invalid token", error, userId },
       { status: 403 }
     );
+  }
 
   const recipe = await prisma.recipe.findUniqueOrThrow({
     where: {

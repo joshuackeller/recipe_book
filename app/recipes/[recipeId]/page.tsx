@@ -8,15 +8,9 @@ interface PageProps {
 }
 
 const Page = async ({ params: { recipeId } }: PageProps) => {
-  let errorMessage;
   let recipe = await serverFetch.get(`/recipes/${recipeId}`);
-  try {
-    await serverFetch.get(`/recipes/${recipeId}`);
-  } catch (error) {
-    errorMessage = error;
-  }
 
-  return <SingleRecipePage recipe={recipe} error={errorMessage} />;
+  return <SingleRecipePage recipe={recipe} />;
 
   // if (!!recipe?.data) {
   //   return <SingleRecipePage recipe={recipe?.data}  />;

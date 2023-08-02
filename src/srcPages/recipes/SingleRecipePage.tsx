@@ -13,12 +13,10 @@ import AddTags from "@/src/components/base/fields/AddTags";
 
 interface SingleRecipePageProps {
   recipe: Recipe;
-  error?: any;
 }
 
-const SingleRecipePage = ({ recipe, error }: SingleRecipePageProps) => {
+const SingleRecipePage = ({ recipe }: SingleRecipePageProps) => {
   console.log(1, recipe);
-  console.log(2, error);
   return <div>testing single page</div>;
   // const [edit, setEdit] = useState<boolean>(false);
 

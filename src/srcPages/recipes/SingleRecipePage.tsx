@@ -16,6 +16,7 @@ interface SingleRecipePageProps {
 }
 
 const SingleRecipePage = ({ recipe }: SingleRecipePageProps) => {
+  console.log(1, recipe);
   return <div>testing single page</div>;
   // const [edit, setEdit] = useState<boolean>(false);
 

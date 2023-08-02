@@ -16,75 +16,73 @@ interface SingleRecipePageProps {
 }
 
 const SingleRecipePage = ({ recipe }: SingleRecipePageProps) => {
-  console.log(1, recipe);
-  return <div>testing single page</div>;
-  // const [edit, setEdit] = useState<boolean>(false);
+  const [edit, setEdit] = useState<boolean>(false);
 
-  // const [name, setName] = useState<string>(recipe.name || "");
-  // const [html, setHtml] = useState<string>(recipe.html || "");
-  // const [tags, setTags] = useState<TagProp[]>(recipe.tags || []);
+  const [name, setName] = useState<string>(recipe.name || "");
+  const [html, setHtml] = useState<string>(recipe.html || "");
+  const [tags, setTags] = useState<TagProp[]>(recipe.tags || []);
 
-  // const saveRecipe = () => {
-  //   clientFetch
-  //     .put(`/recipes/${recipe.id}`, { name, html })
-  //     .then(() => setEdit(false));
-  // };
+  const saveRecipe = () => {
+    clientFetch
+      .put(`/recipes/${recipe.id}`, { name, html })
+      .then(() => setEdit(false));
+  };
 
-  // return (
-  //   <div className=" space-y-5">
-  //     <BackButton />
-  //     {edit ? (
-  //       <>
-  //         <TextInput
-  //           inputClassName="w-full h-12 font-bold text-2xl "
-  //           label="Name"
-  //           value={name}
-  //           setValue={setName}
-  //         />
-  //         <div>
-  //           <div className="text-xs text-gray-600">
-  //             <label>Details</label>
-  //           </div>
-  //           <TipTap value={html} setValue={setHtml} />
-  //         </div>
-  //         <div>
-  //           <div className="text-xs text-gray-600">Tags</div>
-  //           <AddTags tags={tags} setTags={setTags} recipeId={recipe.id} />
-  //         </div>
-  //         <div className="flex justify-end">
-  //           <Button onClick={saveRecipe} type="submit">
-  //             Save
-  //           </Button>
-  //         </div>
-  //       </>
-  //     ) : (
-  //       <>
-  //         <h2>{name}</h2>
-  //         {html && (
-  //           <div
-  //             className="ProseMirror"
-  //             dangerouslySetInnerHTML={{ __html: html }}
-  //           />
-  //         )}
-  //         <div className="flex gap-1">
-  //           {tags?.map((tag) => (
-  //             <Tag tag={tag} key={tag.id} />
-  //           ))}
-  //         </div>
+  return (
+    <div className=" space-y-5">
+      <BackButton />
+      {edit ? (
+        <>
+          <TextInput
+            inputClassName="w-full h-12 font-bold text-2xl "
+            label="Name"
+            value={name}
+            setValue={setName}
+          />
+          <div>
+            <div className="text-xs text-gray-600">
+              <label>Details</label>
+            </div>
+            <TipTap value={html} setValue={setHtml} />
+          </div>
+          <div>
+            <div className="text-xs text-gray-600">Tags</div>
+            <AddTags tags={tags} setTags={setTags} recipeId={recipe.id} />
+          </div>
+          <div className="flex justify-end">
+            <Button onClick={saveRecipe} type="submit">
+              Save
+            </Button>
+          </div>
+        </>
+      ) : (
+        <>
+          <h2>{name}</h2>
+          {html && (
+            <div
+              className="ProseMirror"
+              dangerouslySetInnerHTML={{ __html: html }}
+            />
+          )}
+          <div className="flex gap-1">
+            {tags?.map((tag) => (
+              <Tag tag={tag} key={tag.id} />
+            ))}
+          </div>
 
-  //         <div className="flex justify-between">
-  //           <button
-  //             onClick={() => setEdit(true)}
-  //             className="text-blue-500 text-sm"
-  //           >
-  //             Edit
-  //           </button>
-  //           <DeleteButton recipe={recipe} />
-  //         </div>
-  //       </>
-  //     )}
-  //   </div>
-  // );
+          <div className="flex justify-between">
+            <button
+              onClick={() => setEdit(true)}
+              className="text-blue-500 text-sm"
+            >
+              Edit
+            </button>
+            <DeleteButton recipe={recipe} />
+          </div>
+        </>
+      )}
+    </div>
+  );
 };
 
 export default SingleRecipePage;

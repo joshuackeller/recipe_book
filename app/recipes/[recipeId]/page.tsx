@@ -22,8 +22,8 @@ const Page = async ({ params: { recipeId } }: PageProps) => {
     return (
       <div>
         <div>Could not find recipe</div>
-        {recipe && <div>{recipe.toString()}</div>}
-        {errorMessage && <div>{errorMessage.toString()}</div>}
+        {recipe && <div>recipe: {recipe}</div>}
+        {errorMessage && <div>error: {errorMessage.toString()}</div>}
       </div>
     );
   }

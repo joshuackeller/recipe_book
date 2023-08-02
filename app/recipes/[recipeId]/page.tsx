@@ -16,17 +16,19 @@ const Page = async ({ params: { recipeId } }: PageProps) => {
     errorMessage = error;
   }
 
-  if (!!recipe?.data) {
-    return <SingleRecipePage recipe={recipe?.data} />;
-  } else {
-    return (
-      <div>
-        <div>Could not find recipe</div>
-        {recipe && <div>recipe: {recipe}</div>}
-        {errorMessage && <div>error: {errorMessage.toString()}</div>}
-      </div>
-    );
-  }
+  return <SingleRecipePage recipe={recipe} />;
+
+  // if (!!recipe?.data) {
+  //   return <SingleRecipePage recipe={recipe?.data} />;
+  // } else {
+  //   return (
+  //     <div>
+  //       <div>Could not find recipe</div>
+  //       {recipe && <div>recipe: {recipe}</div>}
+  //       {errorMessage && <div>error: {errorMessage.toString()}</div>}
+  //     </div>
+  //   );
+  // }
 };
 
 export default Page;

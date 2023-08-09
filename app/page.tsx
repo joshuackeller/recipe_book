@@ -6,7 +6,7 @@ export default async function Home() {
 
   return (
     <div>
-      <HomePage preRenderRecipes={recipes?.data} />
+      <HomePage preRenderRecipes={recipes} />
     </div>
   );
 }

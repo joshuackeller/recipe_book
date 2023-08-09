@@ -16,6 +16,7 @@ import { clientFetch } from "@/src/utilities/clientFetch";
 import TextInput from "../base/fields/TextInput";
 import Card from "../base/Card";
 import Button from "../base/Button";
+import { cookies } from "next/headers";
 
 export enum AuthFlow {
   signin = "signin",
@@ -62,9 +63,10 @@ const AuthFlowItems = ({ setToken }: AuthFlowProps) => {
         code,
       })
       .then((response) => {
-        if (response?.data?.token) {
-          setLocalStorageItem("token", response?.data?.token);
-          setToken(response?.data?.token);
+        if (!!response?.token) {
+          console.log(1, response.token);
+          setLocalStorageItem("token", response.token);
+          setToken(response.token);
         }
       });
   };

@@ -4,7 +4,7 @@ interface ClientFetchOptions extends RequestInit {
   json?: boolean;
 }
 
-const BASE_URL = "/api"
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const clientFetch = async (
   url: string,

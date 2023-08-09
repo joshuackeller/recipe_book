@@ -22,8 +22,8 @@ const CreateGroup = () => {
         autoAddRecipes,
       })
       .then((response) => {
-        if (response?.data?.id) {
-          router.push(`/groups/${response?.data?.id}`);
+        if (response?.id) {
+          router.push(`/groups/${response?.id}`);
         } else {
           router.push("/settings");
         }

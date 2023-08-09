@@ -10,7 +10,7 @@ interface PageProps {
 const Page = async ({ params: { recipeId } }: PageProps) => {
   let recipe = await serverFetch.get(`/recipes/${recipeId}`);
 
-  return <SingleRecipePage recipe={recipe?.data} />;
+  return <SingleRecipePage recipe={recipe} />;
 };
 
 export default Page;

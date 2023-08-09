@@ -25,8 +25,8 @@ const CreateRecipe = () => {
         tags,
       })
       .then((response) => {
-        if (response?.data?.id) {
-          router.push(`/recipes/${response.data.id}`);
+        if (response?.id) {
+          router.push(`/recipes/${response.id}`);
         } else {
           router.push("/");
         }

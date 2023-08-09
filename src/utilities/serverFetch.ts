@@ -6,7 +6,7 @@ interface ServerFetchOptions extends RequestInit {
   json?: boolean;
 }
 
-const BASE_URL = process.env.API_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const serverFetch = async (
   url: string,
@@ -24,6 +24,7 @@ export const serverFetch = async (
       "Content-Type": "application/json",
       ...(token ? { Authorization: token } : {}),
     },
+    cache: "no-store",
   });
   const data =
     options?.json === false ? await response.text() : await response.json();

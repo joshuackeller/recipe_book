@@ -5,11 +5,7 @@ import { SquaresPlusIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
 const Page = async () => {
-  const { data: groups } = await serverFetch.get(
-    "/user/groups"
-  );
-
-  console.log(groups);
+  const groups = await serverFetch.get("/user/groups");
 
   return (
     <div>

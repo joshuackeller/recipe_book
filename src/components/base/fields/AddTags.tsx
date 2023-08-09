@@ -23,8 +23,8 @@ const AddTags = ({ recipeId, tags, setTags }: AddTagsProps) => {
     clientFetch
       .get(`/tags${!!search ? `?search=${search}` : ""}`)
       .then((response) => {
-        if (!!response.data) {
-          let preFilterSearchTags = response.data;
+        if (!!response) {
+          let preFilterSearchTags = response;
           const newSearchTags = preFilterSearchTags.filter((searchTag: any) => {
             if (!!tags && tags.length > 0) {
               const index = tags.findIndex(

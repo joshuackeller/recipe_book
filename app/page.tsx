@@ -5,9 +5,8 @@ export default async function Home() {
   let recipes = [];
   try {
     recipes = await serverFetch.get("/recipes");
-    console.log(41, recipes);
   } catch (error) {
-    console.log(43, error);
+    console.error(error);
   }
 
   return (

@@ -9,9 +9,8 @@ const Page = async () => {
   let groups = [];
   try {
     groups = await serverFetch.get("/groups");
-    console.log(51, groups);
   } catch (error) {
-    console.log(53, error);
+    console.error(error);
   }
 
   return (

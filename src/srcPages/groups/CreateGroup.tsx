@@ -17,7 +17,7 @@ const CreateGroup = () => {
   const router = useRouter();
   const createGroup = () => {
     clientFetch
-      .post("/user/groups", {
+      .post("/groups", {
         name,
         autoAddRecipes,
       })

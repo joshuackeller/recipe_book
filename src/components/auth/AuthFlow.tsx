@@ -84,7 +84,7 @@ const AuthFlowItems = ({ setToken }: AuthFlowProps) => {
     case AuthFlow.request_code:
       return (
         <div className="flex justify-center py-20">
-          <Card className="p-5 w-full max-w-md">
+          <Card className="p-5 w-full max-w-sm">
             <form onSubmit={handleRequestCode} className="space-y-2">
               <h2 className="text-center mb-2">Request Code</h2>
               <TextInput

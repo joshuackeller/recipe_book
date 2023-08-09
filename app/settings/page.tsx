@@ -23,12 +23,13 @@ const Page = async () => {
           </div>
         </Link>
         {groups?.map((group: Group) => (
-          <div
+          <Link
+            href={`/groups/${group.id}`}
             key={group.id}
             className="border-2 border-black py-2 w-36  rounded-md text-center "
           >
             {group.name}
-          </div>
+          </Link>
         ))}
       </div>
       <div className="mt-24 float-right">

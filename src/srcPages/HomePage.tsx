@@ -133,7 +133,7 @@ const HomePage = ({ preRenderRecipes }: HomePageProps) => {
         >
           <BeakerIcon className="h-10 w-10 text-white" />
         </Link>
-        {recipes.map((recipe: Recipe) => (
+        {recipes?.map((recipe: Recipe) => (
           <Link
             className="border-2 border-black rounded-lg h-[150px] max-w-[150px] w-full flex justify-center items-center hover:border-black/80 text-black/80"
             href={`/recipes/${recipe.id}`}

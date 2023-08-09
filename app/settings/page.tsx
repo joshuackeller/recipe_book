@@ -1,11 +1,18 @@
 import BackButton from "@/src/components/general/BackButton";
+import SignOutButton from "@/src/components/general/SignOutButton";
 import { Group } from "@/src/interfaces";
 import { serverFetch } from "@/src/utilities/serverFetch";
 import { SquaresPlusIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
 const Page = async () => {
-  const groups = await serverFetch.get("/user/groups");
+  let groups = [];
+  try {
+    groups = await serverFetch.get("/groups");
+    console.log(51, groups);
+  } catch (error) {
+    console.log(53, error);
+  }
 
   return (
     <div>
@@ -24,6 +31,9 @@ const Page = async () => {
             {group.name}
           </div>
         ))}
+      </div>
+      <div className="mt-24 float-right">
+        <SignOutButton />
       </div>
     </div>
   );

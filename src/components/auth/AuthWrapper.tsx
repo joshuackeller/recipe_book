@@ -1,9 +1,17 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState, createContext } from "react";
 import { getLocalStorageItem } from "@/src/utilities/LocalStorage";
 import AuthFlowItems from "./AuthFlow";
 import Loading from "../base/Loading";
+import Cookies from "js-cookie";
+
+export interface AuthContext {
+  token?: string;
+  signOut: () => void;
+}
+
+export const AuthContext = createContext<AuthContext>({} as AuthContext);
 
 interface AuthWrapper {
   children: ReactNode;
@@ -11,7 +19,7 @@ interface AuthWrapper {
 
 const AuthWrapper = ({ children }: AuthWrapper) => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [token, setToken] = useState<string>("");
+  const [token, setToken] = useState<string | undefined>();
 
   useEffect(() => {
     if (!token) {
@@ -21,9 +29,25 @@ const AuthWrapper = ({ children }: AuthWrapper) => {
     setLoading(false);
   }, []);
 
-  if (loading) return <Loading className="my-10" />;
-  if (!!token) return <>{children}</>;
-  else return <AuthFlowItems setToken={setToken} />;
+  const signOut = () => {
+    if (typeof window !== "undefined") {
+      Cookies.remove("token");
+      localStorage.removeItem("token");
+      setToken(undefined);
+    }
+  };
+
+  return (
+    <AuthContext.Provider value={{ token, signOut }}>
+      {loading ? (
+        <Loading className="my-10" />
+      ) : !!token ? (
+        <>{children}</>
+      ) : (
+        <AuthFlowItems setToken={setToken} />
+      )}
+    </AuthContext.Provider>
+  );
 };
 
 export default AuthWrapper;

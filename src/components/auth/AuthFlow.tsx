@@ -7,16 +7,13 @@ import {
   useEffect,
   useState,
 } from "react";
-import {
-  getLocalStorageItem,
-  setLocalStorageItem,
-} from "@/src/utilities/LocalStorage";
+import { setLocalStorageItem } from "@/src/utilities/LocalStorage";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { clientFetch } from "@/src/utilities/clientFetch";
 import TextInput from "../base/fields/TextInput";
 import Card from "../base/Card";
 import Button from "../base/Button";
-import { cookies } from "next/headers";
+import Cookies from "js-cookie";
 
 export enum AuthFlow {
   signin = "signin",
@@ -47,9 +44,15 @@ const AuthFlowItems = ({ setToken }: AuthFlowProps) => {
   const handleRequestCode = (e: FormEvent) => {
     e.preventDefault();
     clientFetch
-      .post("/auth/request_code", {
-        phone: "+1" + phone,
-      })
+      .post(
+        "/auth/request_code",
+        {
+          phone: "+1" + phone,
+        },
+        {
+          requireToken: false,
+        }
+      )
       .then(() => {
         router.push(`${pathname}?authFlow=${AuthFlow.signin}`);
       });
@@ -57,20 +60,24 @@ const AuthFlowItems = ({ setToken }: AuthFlowProps) => {
 
   const handleSignin = (e: FormEvent) => {
     e.preventDefault();
-    fetch("/api/proxy_sign_in", {
-      body: JSON.stringify({
-        phone: "+1" + phone,
-        code,
-      }),
-      method: "POST",
-    }).then(async (responseObject) => {
-      const response = await responseObject.json();
-      if (!!response?.token) {
-        console.log(1, response);
-        setLocalStorageItem("token", response.token);
-        setToken(response.token);
-      }
-    });
+    clientFetch
+      .post(
+        "/auth/sign_in",
+        {
+          phone: "+1" + phone,
+          code,
+        },
+        {
+          requireToken: false,
+        }
+      )
+      .then(async (response) => {
+        if (!!response?.token) {
+          Cookies.set("token", response.token, { expires: 365 });
+          setLocalStorageItem("token", response.token);
+          setToken(response.token);
+        }
+      });
   };
 
   switch (authFlow) {

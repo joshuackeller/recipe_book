@@ -57,18 +57,20 @@ const AuthFlowItems = ({ setToken }: AuthFlowProps) => {
 
   const handleSignin = (e: FormEvent) => {
     e.preventDefault();
-    clientFetch
-      .post("/auth/sign_in", {
+    fetch("/api/proxy_sign_in", {
+      body: JSON.stringify({
         phone: "+1" + phone,
         code,
-      })
-      .then((response) => {
-        if (!!response?.token) {
-          console.log(1, response.token);
-          setLocalStorageItem("token", response.token);
-          setToken(response.token);
-        }
-      });
+      }),
+      method: "POST",
+    }).then(async (responseObject) => {
+      const response = await responseObject.json();
+      if (!!response?.token) {
+        console.log(1, response);
+        setLocalStorageItem("token", response.token);
+        setToken(response.token);
+      }
+    });
   };
 
   switch (authFlow) {

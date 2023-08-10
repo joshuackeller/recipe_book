@@ -1,3 +1,4 @@
+import BackButton from "@/src/components/general/BackButton";
 import { Group } from "@/src/interfaces";
 
 interface SingleGroupPageProps {
@@ -7,6 +8,7 @@ interface SingleGroupPageProps {
 const SingleGroupPage = ({ group }: SingleGroupPageProps) => {
   return (
     <div>
+      <BackButton href="/settings" />
       <div>{group.name}</div>
     </div>
   );

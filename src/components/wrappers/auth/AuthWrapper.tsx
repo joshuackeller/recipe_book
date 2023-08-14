@@ -3,7 +3,7 @@
 import { ReactNode, useEffect, useState, createContext } from "react";
 import { getLocalStorageItem } from "@/src/utilities/LocalStorage";
 import AuthFlowItems from "./AuthFlow";
-import Loading from "../base/Loading";
+import Loading from "../../base/Loading";
 import Cookies from "js-cookie";
 
 export interface AuthContext {

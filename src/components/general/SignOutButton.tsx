@@ -3,7 +3,7 @@
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
-import { AuthContext } from "../auth/AuthWrapper";
+import { AuthContext } from "../wrappers/auth/AuthWrapper";
 
 const SignOutButton = () => {
   const router = useRouter();

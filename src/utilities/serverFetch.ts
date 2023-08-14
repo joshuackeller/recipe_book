@@ -32,7 +32,7 @@ export const serverFetch = async (
       options?.json === false ? await response.text() : await response.json();
 
     const stringStatus = response.status.toString();
-    if (stringStatus.startsWith("4")) {
+    if (stringStatus.startsWith("4") || stringStatus.startsWith("5")) {
       throw new Error(data?.error ?? "Error fetching data");
     }
 

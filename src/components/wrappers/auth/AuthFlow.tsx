@@ -10,9 +10,9 @@ import {
 import { setLocalStorageItem } from "@/src/utilities/LocalStorage";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { clientFetch } from "@/src/utilities/clientFetch";
-import TextInput from "../base/fields/TextInput";
-import Card from "../base/Card";
-import Button from "../base/Button";
+import TextInput from "../../base/fields/TextInput";
+import Card from "../../base/Card";
+import Button from "../../base/Button";
 import Cookies from "js-cookie";
 
 export enum AuthFlow {

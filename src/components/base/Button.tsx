@@ -11,6 +11,8 @@ interface ButtonProps {
   type?: "button" | "submit" | "reset" | undefined;
   className?: string;
   href?: string;
+  isLoading?: boolean;
+  disabled?: boolean;
 }
 
 const Button = ({
@@ -20,16 +22,20 @@ const Button = ({
   className,
   type = "button",
   href,
+  isLoading,
+  disabled,
 }: ButtonProps) => {
   return (
     <ConditionalLink href={href}>
       <button
         className={clsx(
-          "px-8 py-2 bg-black rounded text-white hover:bg-black/80",
+          "px-8 py-2 bg-black rounded-md text-white hover:bg-black/80 whitespace-nowrap",
+          isLoading && "bg-black/80 animate-pulse",
           className
         )}
         onClick={onClick}
         type={type}
+        disabled={disabled}
       >
         {text ?? children}
       </button>

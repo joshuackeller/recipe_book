@@ -2,24 +2,28 @@ import Cookies from "js-cookie";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
 
-interface ClientFetchOptions extends RequestInit {
+interface CustomFetchOptions extends RequestInit {
   json?: boolean;
   requireToken: boolean;
 }
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export const clientFetch = async (
+export const customFetch = async (
   url: string,
   method: HttpMethod,
-  options?: ClientFetchOptions
+  options?: CustomFetchOptions
 ) => {
   let token;
+
   if (typeof window !== "undefined") {
     token = localStorage.getItem("token");
     if (!!token) {
       Cookies.set("token", token, { expires: 365 });
     }
+  }
+  if (!token) {
+    token = Cookies.get("token");
   }
 
   if (!!token || options?.requireToken === false) {
@@ -57,25 +61,25 @@ export const clientFetch = async (
   }
 };
 
-clientFetch.get = (url: string, options?: ClientFetchOptions) =>
-  clientFetch(url, "GET", {
+customFetch.get = (url: string, options?: CustomFetchOptions) =>
+  customFetch(url, "GET", {
     ...options,
     requireToken: options?.requireToken ?? true,
   });
-clientFetch.post = (url: string, body?: any, options?: ClientFetchOptions) =>
-  clientFetch(url, "POST", {
-    ...options,
-    body: JSON.stringify(body),
-    requireToken: options?.requireToken ?? true,
-  });
-clientFetch.put = (url: string, body?: any, options?: ClientFetchOptions) =>
-  clientFetch(url, "PUT", {
+customFetch.post = (url: string, body?: any, options?: CustomFetchOptions) =>
+  customFetch(url, "POST", {
     ...options,
     body: JSON.stringify(body),
     requireToken: options?.requireToken ?? true,
   });
-clientFetch.delete = (url: string, options?: ClientFetchOptions) =>
-  clientFetch(url, "DELETE", {
+customFetch.put = (url: string, body?: any, options?: CustomFetchOptions) =>
+  customFetch(url, "PUT", {
+    ...options,
+    body: JSON.stringify(body),
+    requireToken: options?.requireToken ?? true,
+  });
+customFetch.delete = (url: string, options?: CustomFetchOptions) =>
+  customFetch(url, "DELETE", {
     ...options,
     requireToken: options?.requireToken ?? true,
   });

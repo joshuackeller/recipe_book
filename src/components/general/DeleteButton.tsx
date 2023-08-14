@@ -1,11 +1,11 @@
 "use client";
 
-import { Recipe } from "@prisma/client";
 import { MouseEvent, useState } from "react";
 import Modal from "../base/Modal";
 import { clientFetch } from "@/src/utilities/clientFetch";
 import { useRouter } from "next/navigation";
 import Button from "../base/Button";
+import { Recipe } from "@/src/interfaces";
 
 interface DeleteButtonProps {
   recipe: Recipe;

@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 import queryString from "query-string";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
@@ -28,12 +28,12 @@ export const customFetch = async (
   if (!token) {
     token = Cookies.get("token");
   }
-  if (!token) {
-    const nextToken = cookies().get("token");
-    if (!!nextToken?.value) {
-      token = nextToken.value;
-    }
-  }
+  // if (!token) {
+  //   const nextToken = cookies().get("token");
+  //   if (!!nextToken?.value) {
+  //     token = nextToken.value;
+  //   }
+  // }
 
   // SET QUERY PARAMS
   let queryParams = "";

@@ -29,7 +29,7 @@ const Page = async () => {
       <BackButton />
       {!!invitations && invitations.length > 0 && <PendingInvitations />}
 
-      {!!groups && groups.length > 0 && <MyGroups />}
+      <MyGroups />
       <div className="mt-24 float-right">
         <SignOutButton />
       </div>

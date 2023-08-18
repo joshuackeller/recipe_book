@@ -1,22 +1,22 @@
 import { customFetch } from "@/src/utilities/customFetch";
 import { useMutation } from "@tanstack/react-query";
 
-interface DeleteInvitationProps {
+interface DeleteGroupInvitationProps {
   groupId: number;
   invitationId: number;
 }
 
-const DeleteInvitation = async ({
+const DeleteGroupInvitation = async ({
   groupId,
   invitationId,
-}: DeleteInvitationProps) => {
+}: DeleteGroupInvitationProps) => {
   return await customFetch.delete(
     `/groups/${groupId}/invitations/${invitationId}`
   );
 };
 
-const useDeleteInvitation = () => {
-  return useMutation(DeleteInvitation);
+const useDeleteGroupInvitation = () => {
+  return useMutation(DeleteGroupInvitation);
 };
 
-export default useDeleteInvitation;
+export default useDeleteGroupInvitation;

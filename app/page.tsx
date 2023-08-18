@@ -1,17 +1,29 @@
+import HydrateClient from "@/src/components/wrappers/queryClient/HydrateClient";
 import HomePage from "@/src/srcPages/HomePage";
-import { serverFetch } from "@/src/utilities/serverFetch";
+import { QueryClient, dehydrate } from "@tanstack/react-query";
+import {
+  GetRecipes,
+  KEY as RECIPES,
+} from "@/src/apiCalls/queries/recipes/useGetRecipes";
+import { GetTags, KEY as TAGS } from "@/src/apiCalls/queries/tags/useGetTags";
 
 export default async function Home() {
-  let recipes = [];
-  try {
-    recipes = await serverFetch.get("/recipes");
-  } catch (error) {
-    console.error(error);
-  }
+  const queryClient = new QueryClient();
+
+  await Promise.all([
+    queryClient.prefetchQuery([RECIPES], () => {
+      return GetRecipes({}) ?? [];
+    }),
+    queryClient.prefetchQuery([TAGS], () => {
+      return GetTags({}) ?? [];
+    }),
+  ]);
+
+  const state = dehydrate(queryClient);
 
   return (
-    <div>
-      <HomePage preRenderRecipes={recipes} />
-    </div>
+    <HydrateClient state={state}>
+      <HomePage />
+    </HydrateClient>
   );
 }

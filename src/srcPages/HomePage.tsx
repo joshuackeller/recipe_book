@@ -1,76 +1,60 @@
 "use client";
 
-import Button from "../components/base/Button";
 import Link from "next/link";
 import TextInput from "../components/base/fields/TextInput";
-import {
-  BeakerIcon,
-  PlusIcon,
-  WrenchScrewdriverIcon,
-} from "@heroicons/react/24/solid";
-import { clientFetch } from "@/src/utilities/clientFetch";
+import { BeakerIcon, WrenchScrewdriverIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { Recipe, Tag as TagProp } from "@/src/interfaces";
 import Tag from "../components/base/Tag";
+import useGetRecipes, {
+  GetRecipes,
+} from "../apiCalls/queries/recipes/useGetRecipes";
+import useGetTags, { GetTags } from "../apiCalls/queries/tags/useGetTags";
 
-const API_BASE = "/recipes";
+interface HomePageProps {}
 
-interface HomePageProps {
-  preRenderRecipes: Recipe[];
-}
+const HomePage = ({}: HomePageProps) => {
+  const { data: tagsData } = useGetTags();
+  const { data: recipesData } = useGetRecipes();
 
-const HomePage = ({ preRenderRecipes }: HomePageProps) => {
   const [search, setSearch] = useState<string>("");
-  const [recipes, setRecipes] = useState<Recipe[]>(preRenderRecipes || []);
 
+  const [recipes, setRecipes] = useState<Recipe[]>(recipesData || []);
   const [tags, setTags] = useState<TagProp[]>([]);
-  const [searchTags, setSearchTags] = useState<TagProp[]>([]);
+
+  const [searchTags, setSearchTags] = useState<TagProp[]>(tagsData || []);
 
   const getSearchTags = () => {
-    clientFetch
-      .get(`/tags${!!search ? `?search=${search}` : ""}`)
-      .then((response) => {
-        if (!!response) {
-          let preFilterSearchTags = response;
-          const newSearchTags = preFilterSearchTags.filter((searchTag: any) => {
-            if (!!tags && tags.length > 0) {
-              const index = tags.findIndex(
-                (tag) => tag.name === searchTag.name || tag.id === searchTag.id
-              );
-              if (index === -1) return true;
-              else return false;
-            } else {
-              return true;
-            }
-          });
-          setSearchTags(newSearchTags);
-        }
-      });
+    GetTags({ search }).then((response) => {
+      if (!!response) {
+        let preFilterSearchTags = response;
+        const newSearchTags = preFilterSearchTags.filter((searchTag: any) => {
+          if (!!tags && tags.length > 0) {
+            const index = tags.findIndex(
+              (tag) => tag.name === searchTag.name || tag.id === searchTag.id
+            );
+            if (index === -1) return true;
+            else return false;
+          } else {
+            return true;
+          }
+        });
+        setSearchTags(newSearchTags);
+      }
+    });
   };
 
   const getRecipes = () => {
-    let searchUrl = API_BASE;
-    let tagIds = tags?.reduce((ids, tag, index) => {
-      if (index == tags.length - 1) {
-        return (ids += `${tag.id}`);
-      } else {
-        return (ids += `${tag.id},`);
+    GetRecipes({ search, tagIds: tags?.map((tag) => tag.id) }).then(
+      (response) => {
+        setRecipes(response);
       }
-    }, "");
-    if (!!search && !!tagIds) searchUrl += `?search=${search}&tagIds=${tagIds}`;
-    else if (!!search) searchUrl += `?search=${search}`;
-    else if (!!tagIds) searchUrl += `?tagIds=${tagIds}`;
-    clientFetch.get(searchUrl).then((response) => {
-      setRecipes(response);
-    });
+    );
   };
 
   useEffect(() => {
     getSearchTags();
     getRecipes();
-    // const findTag = searchTags.find((tag) => {
-    //   return tag.name.toLowerCase() === search.toLowerCase();
-    // });
   }, [search, tags]);
 
   const removeTag = (tag: TagProp) => {
@@ -146,7 +130,5 @@ const HomePage = ({ preRenderRecipes }: HomePageProps) => {
     </div>
   );
 };
-
-// grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-5
 
 export default HomePage;

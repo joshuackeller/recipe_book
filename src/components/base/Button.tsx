@@ -29,8 +29,8 @@ const Button = ({
     <ConditionalLink href={href}>
       <button
         className={clsx(
-          "px-8 py-2 bg-black rounded-md text-white hover:bg-black/80 whitespace-nowrap",
-          isLoading && "bg-black/80 animate-pulse",
+          "px-8 py-2 bg-black rounded-md text-white hover:bg-black/80 whitespace-nowrap disabled:cursor-default",
+          isLoading && "animate-pulse bg-opacity-80",
           className
         )}
         onClick={onClick}

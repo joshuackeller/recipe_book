@@ -2,8 +2,7 @@
 
 import Button from "@/src/components/base/Button";
 import Modal from "@/src/components/base/Modal";
-import { GroupInvite, GroupUser, User } from "@/src/interfaces";
-import { clientFetch } from "@/src/utilities/clientFetch";
+import { GroupInvite, GroupUser } from "@/src/interfaces";
 import {
   ClockIcon,
   MinusCircleIcon,
@@ -14,12 +13,12 @@ import BackButton from "@/src/components/general/BackButton";
 import TextInput from "@/src/components/base/fields/TextInput";
 import useGetGroup from "@/src/apiCalls/queries/groups/useGetGroup";
 import useGetGroupInvitations from "@/src/apiCalls/queries/groups/useGetGroupInvitations";
-import useSendInvite from "@/src/apiCalls/mutations/groups/useSendInvitation";
 import { useQueryClient } from "@tanstack/react-query";
 import { KEY as INVITATIONS } from "@/src/apiCalls/queries/groups/useGetGroupInvitations";
-import useDeleteInvitation from "@/src/apiCalls/mutations/groups/useDeleteInvitation";
 import useGetGroupUsers from "@/src/apiCalls/queries/groups/useGetGroupUsers";
 import useRemoveGroupUser from "@/src/apiCalls/mutations/groups/useRemoveGroupUser";
+import useDeleteGroupInvitation from "@/src/apiCalls/mutations/groups/useDeleteGroupInvitation";
+import useSendGroupInvite from "@/src/apiCalls/mutations/groups/useSendGroupInvitation";
 
 interface SingleGroupPageProps {
   groupId: string;
@@ -41,8 +40,7 @@ const SingleGroupPage = ({ groupId }: SingleGroupPageProps) => {
     mutate: sendInvite,
     error,
     isLoading: loadingInvite,
-  } = useSendInvite();
-
+  } = useSendGroupInvite();
   const queryClient = useQueryClient();
   const handleSendInvite = () => {
     sendInvite(
@@ -163,7 +161,10 @@ const UserInGroup = ({ user, groupId }: UserInGroupProps) => {
           <Button className=" flex-1" onClick={() => setOpen(false)}>
             Cancel
           </Button>
-          <Button className="flex-1 bg-yellow-500 hover:bg-yellow-500/90">
+          <Button
+            onClick={handleRemoveUser}
+            className="flex-1 bg-yellow-500 hover:bg-yellow-500/90"
+          >
             Remove
           </Button>
         </div>
@@ -182,7 +183,7 @@ const PendingUser = ({ invitation, groupId }: PendingUserProps) => {
 
   const queryClient = useQueryClient();
 
-  const { mutate: deleteInvitation, isLoading } = useDeleteInvitation();
+  const { mutate: deleteInvitation, isLoading } = useDeleteGroupInvitation();
   const handleDeleteInvitation = () => {
     deleteInvitation(
       { groupId, invitationId: invitation.id },

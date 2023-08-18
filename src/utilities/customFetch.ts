@@ -1,10 +1,13 @@
 import Cookies from "js-cookie";
+import { cookies } from "next/headers";
+import queryString from "query-string";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
 
 interface CustomFetchOptions extends RequestInit {
   json?: boolean;
-  requireToken: boolean;
+  requireToken?: boolean;
+  params?: Record<string, any>;
 }
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -14,8 +17,8 @@ export const customFetch = async (
   method: HttpMethod,
   options?: CustomFetchOptions
 ) => {
+  // GET TOKEN
   let token;
-
   if (typeof window !== "undefined") {
     token = localStorage.getItem("token");
     if (!!token) {
@@ -25,9 +28,26 @@ export const customFetch = async (
   if (!token) {
     token = Cookies.get("token");
   }
+  if (!token) {
+    const nextToken = cookies().get("token");
+    if (!!nextToken?.value) {
+      token = nextToken.value;
+    }
+  }
 
+  // SET QUERY PARAMS
+  let queryParams = "";
+  if (!!options?.params) {
+    queryParams = `?${queryString.stringify(options.params, {
+      arrayFormat: "comma",
+      skipNull: true,
+      skipEmptyString: true,
+    })}`;
+  }
+
+  // FETCH
   if (!!token || options?.requireToken === false) {
-    const response = await fetch(BASE_URL + url, {
+    const response = await fetch(BASE_URL + url + queryParams, {
       method,
       ...options,
       headers: {
@@ -35,10 +55,12 @@ export const customFetch = async (
         "Content-Type": "application/json",
         ...(token ? { Authorization: token } : {}),
       },
+      cache: "no-store",
     });
     const data =
       options?.json === false ? await response.text() : await response.json();
 
+    // HANDLE ERRORS
     const stringStatus = response.status.toString();
     if (stringStatus.startsWith("4") || stringStatus.startsWith("5")) {
       if (data?.error?.name === "ZodError") {
@@ -55,6 +77,8 @@ export const customFetch = async (
             : JSON.stringify(data.error)
           : "Error fetching data"
       );
+    } else {
+      console.log(url, "No token found");
     }
 
     return data;

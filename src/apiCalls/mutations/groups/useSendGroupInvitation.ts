@@ -1,15 +1,17 @@
 import { customFetch } from "@/src/utilities/customFetch";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { KEY as INVITATIONS } from "../../queries/groups/useGetGroupInvitations";
-import { GroupInvite } from "@/src/interfaces";
 
-interface SendInviteProps {
+interface SendGroupInviteProps {
   groupId: string;
   name: string;
   phone: string;
 }
 
-const SendInvite = async ({ groupId, name, phone }: SendInviteProps) => {
+const SendGroupInvite = async ({
+  groupId,
+  name,
+  phone,
+}: SendGroupInviteProps) => {
   const response = await customFetch.post(`/groups/${groupId}/invitations`, {
     name,
     phone,
@@ -17,9 +19,9 @@ const SendInvite = async ({ groupId, name, phone }: SendInviteProps) => {
   return response;
 };
 
-const useSendInvite = () => {
+const useSendGroupInvite = () => {
   const queryClient = useQueryClient();
-  return useMutation(SendInvite);
+  return useMutation(SendGroupInvite);
 };
 
-export default useSendInvite;
+export default useSendGroupInvite;

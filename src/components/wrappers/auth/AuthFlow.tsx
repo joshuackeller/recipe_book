@@ -9,16 +9,16 @@ import {
 } from "react";
 import { setLocalStorageItem } from "@/src/utilities/LocalStorage";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { clientFetch } from "@/src/utilities/clientFetch";
 import TextInput from "../../base/fields/TextInput";
 import Card from "../../base/Card";
 import Button from "../../base/Button";
 import Cookies from "js-cookie";
+import useCreateAccount from "@/src/apiCalls/mutations/auth/useCreateAccount";
+import useSignIn from "@/src/apiCalls/mutations/auth/useSignIn";
 
 export enum AuthFlow {
-  signin = "signin",
-  signup = "signup",
-  request_code = "request_code",
+  sign_in = "sign_in",
+  create_account = "create_account",
 }
 
 interface AuthFlowProps {
@@ -32,109 +32,141 @@ const AuthFlowItems = ({ setToken }: AuthFlowProps) => {
 
   const searchAuthFlow = searchParams?.get("authFlow") as AuthFlow | null;
   const [authFlow, setAuthFlow] = useState<AuthFlow>(
-    !!searchAuthFlow ? searchAuthFlow : AuthFlow.request_code
+    !!searchAuthFlow ? searchAuthFlow : AuthFlow.sign_in
   );
   useEffect(() => {
-    setAuthFlow(!!searchAuthFlow ? searchAuthFlow : AuthFlow.request_code);
+    setAuthFlow(!!searchAuthFlow ? searchAuthFlow : AuthFlow.sign_in);
   }, [searchAuthFlow]);
 
-  const [phone, setPhone] = useState<string>("");
-  const [code, setCode] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-  const handleRequestCode = (e: FormEvent) => {
+  const { mutate: createAccount, isLoading: creatingAccount } =
+    useCreateAccount();
+
+  const handleCreateAccount = (e: FormEvent) => {
     e.preventDefault();
-    clientFetch
-      .post(
-        "/auth/request_code",
-        {
-          phone: "+1" + phone,
+    createAccount(
+      { email, name, password },
+      {
+        onSuccess: (response) => {
+          if (!!response?.token) {
+            Cookies.set("token", response.token, { expires: 365 });
+            setLocalStorageItem("token", response.token);
+            setToken(response.token);
+          }
         },
-        {
-          requireToken: false,
-        }
-      )
-      .then(() => {
-        router.push(`${pathname}?authFlow=${AuthFlow.signin}`);
-      });
+      }
+    );
   };
+
+  const { mutate: signIn, isLoading: signingIn } = useSignIn();
 
   const handleSignin = (e: FormEvent) => {
     e.preventDefault();
-    clientFetch
-      .post(
-        "/auth/sign_in",
-        {
-          phone: "+1" + phone,
-          code,
+    signIn(
+      {
+        email,
+        password,
+      },
+      {
+        onSuccess: (response) => {
+          if (!!response?.token) {
+            Cookies.set("token", response.token, { expires: 365 });
+            setLocalStorageItem("token", response.token);
+            setToken(response.token);
+          }
         },
-        {
-          requireToken: false,
-        }
-      )
-      .then(async (response) => {
-        if (!!response?.token) {
-          Cookies.set("token", response.token, { expires: 365 });
-          setLocalStorageItem("token", response.token);
-          setToken(response.token);
-        }
-      });
+      }
+    );
   };
 
   switch (authFlow) {
-    case AuthFlow.request_code:
+    case AuthFlow.create_account:
       return (
         <div className="flex justify-center py-20">
           <Card className="p-5 w-full max-w-sm">
-            <form onSubmit={handleRequestCode} className="space-y-2">
-              <h2 className="text-center mb-2">Request Code</h2>
+            <form onSubmit={handleCreateAccount} className="space-y-2">
+              <h2 className="text-center mb-2">Create Account</h2>
               <TextInput
-                // error={!!phone && !/^[0-9]{10}$/.test(phone)}
-
                 inputClassName="w-full"
-                name="Phone"
-                label="Phone"
+                name="name"
+                label="Name"
                 type="text"
-                value={phone}
-                setValue={setPhone}
+                value={name}
+                setValue={setName}
               />
-              <Button type="submit">Request Code</Button>
+              <TextInput
+                inputClassName="w-full"
+                name="email"
+                label="Email"
+                type="email"
+                value={email}
+                setValue={setEmail}
+              />
+              <TextInput
+                inputClassName="w-full"
+                name="password"
+                label="Password"
+                type="password"
+                value={password}
+                setValue={setPassword}
+              />
+              <Button
+                isLoading={creatingAccount}
+                disabled={creatingAccount}
+                className=""
+                type="submit"
+              >
+                Create Account
+              </Button>
             </form>
+            <div
+              className="pt-4 pb-1 text-center text-xs cursor-pointer"
+              onClick={() => {
+                router.push("/?authFlow=sign_in");
+              }}
+            >
+              or Sign In
+            </div>
           </Card>
         </div>
       );
-    case AuthFlow.signin:
+    case AuthFlow.sign_in:
       return (
         <div className="flex justify-center py-20">
           <Card className="p-5 w-full max-w-sm">
             <form onSubmit={handleSignin} className="space-y-2">
               <h2 className="text-center mb-2">Sign In</h2>
               <TextInput
-                //   error={!!phone && !/^[0-9]{10}$/.test(phone)}
                 className="w-full"
-                name="Phone"
-                label="Phone"
+                name="email"
+                label="Email"
                 type="text"
-                value={phone}
-                setValue={setPhone}
+                value={email}
+                setValue={setEmail}
               />
               <TextInput
                 className="w-full"
-                name="code"
-                label="Code"
-                type="text"
-                value={code}
-                setValue={setCode}
+                name="password"
+                label="Password"
+                type="password"
+                value={password}
+                setValue={setPassword}
               />
-              <Button type="submit">Sign In</Button>
+              <Button isLoading={signingIn} disabled={signingIn} type="submit">
+                Sign In
+              </Button>
             </form>
-          </Card>
-        </div>
-      );
-    case AuthFlow.signup:
-      return (
-        <div className="flex justify-center py-20">
-          <Card className="p-5 w-full max-w-md">
-            <h2 className="text-center mb-2">Sign Up</h2>
+            <div
+              className="pt-4 pb-1 text-center text-xs cursor-pointer"
+              onClick={() => {
+                router.push("/?authFlow=create_account");
+              }}
+            >
+              or Create Account
+            </div>
           </Card>
         </div>
       );

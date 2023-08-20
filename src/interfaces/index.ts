@@ -1,8 +1,7 @@
 export interface User {
   id: number;
   name: string;
-  phone: string;
-  accessCode?: AccessCode;
+  email: string;
   recipes: Recipe[];
   tags: Tag[];
   groups: UserGroup[];
@@ -31,23 +30,15 @@ export interface Group {
 export interface GroupUser {
   id: number;
   name: string;
-  phone: string;
+  email: string;
 }
 
 export interface GroupInvite {
   id: number;
   name: string;
-  phone: string;
+  email: string;
   groupId?: number;
   group?: Group;
-}
-
-export interface AccessCode {
-  code: number;
-  attempts: number;
-  userId: number;
-  user: User;
-  createdAt: Date;
 }
 
 export interface Recipe {

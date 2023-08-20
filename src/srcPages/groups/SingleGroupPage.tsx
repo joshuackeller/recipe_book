@@ -30,7 +30,7 @@ const SingleGroupPage = ({ groupId }: SingleGroupPageProps) => {
   // );
   const [addGroupMember, setAddGroupMember] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
 
   const { data: group } = useGetGroup(groupId);
   const { data: invitations } = useGetGroupInvitations(groupId);
@@ -44,7 +44,7 @@ const SingleGroupPage = ({ groupId }: SingleGroupPageProps) => {
   const queryClient = useQueryClient();
   const handleSendInvite = () => {
     sendInvite(
-      { groupId, name, phone: "+1" + phone },
+      { groupId, name, email: "+1" + email },
       {
         onSuccess: (response) => {
           queryClient.setQueryData(
@@ -53,14 +53,14 @@ const SingleGroupPage = ({ groupId }: SingleGroupPageProps) => {
               if (!!data) {
                 data = [
                   ...data,
-                  { id: response.id, name, phone: "+1" + phone },
+                  { id: response.id, name, email: "+1" + email },
                 ];
               }
               return data;
             }
           );
           setName("");
-          setPhone("");
+          setEmail("");
           setAddGroupMember(false);
         },
       }
@@ -90,7 +90,12 @@ const SingleGroupPage = ({ groupId }: SingleGroupPageProps) => {
               <div className="my-5">
                 <div className="flex flex-wrap items-end gap-y-2 gap-x-5">
                   <TextInput label="Name" value={name} setValue={setName} />
-                  <TextInput label="Phone" value={phone} setValue={setPhone} />
+                  <TextInput
+                    label="Email"
+                    type="email"
+                    value={email}
+                    setValue={setEmail}
+                  />
                   <div className="flex items-center gap-2">
                     <Button
                       onClick={handleSendInvite}

@@ -4,17 +4,17 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 interface SendGroupInviteProps {
   groupId: string;
   name: string;
-  phone: string;
+  email: string;
 }
 
 const SendGroupInvite = async ({
   groupId,
   name,
-  phone,
+  email,
 }: SendGroupInviteProps) => {
   const response = await customFetch.post(`/groups/${groupId}/invitations`, {
     name,
-    phone,
+    email,
   });
   return response;
 };

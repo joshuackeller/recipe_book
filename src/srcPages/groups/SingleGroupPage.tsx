@@ -44,17 +44,14 @@ const SingleGroupPage = ({ groupId }: SingleGroupPageProps) => {
   const queryClient = useQueryClient();
   const handleSendInvite = () => {
     sendInvite(
-      { groupId, name, email: "+1" + email },
+      { groupId, name, email: email },
       {
         onSuccess: (response) => {
           queryClient.setQueryData(
             [INVITATIONS, groupId],
             (data: any[] | undefined) => {
               if (!!data) {
-                data = [
-                  ...data,
-                  { id: response.id, name, email: "+1" + email },
-                ];
+                data = [...data, { id: response.id, name, email: email }];
               }
               return data;
             }

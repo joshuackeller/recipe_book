@@ -20,14 +20,14 @@ const Page = async () => {
   const invitations = await GetInvitations();
 
   queryClient.prefetchQuery([GROUPS], () => groups ?? []);
-  queryClient.prefetchInfiniteQuery([INVITATIONS], () => invitations ?? []);
+  queryClient.prefetchQuery([INVITATIONS], () => invitations ?? []);
 
   const state = dehydrate(queryClient);
 
   return (
     <HydrateClient state={state}>
       <BackButton />
-      {!!invitations && invitations.length > 0 && <PendingInvitations />}
+      <PendingInvitations />
 
       <MyGroups />
       <div className="mt-24 float-right">

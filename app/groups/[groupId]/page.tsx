@@ -1,4 +1,4 @@
-import { serverFetch } from "@/src/utilities/serverFetch";
+export const dynamic = "force-dynamic";
 import SingleGroupPage from "@/src/srcPages/groups/SingleGroupPage";
 import HydrateClient from "@/src/components/wrappers/queryClient/HydrateClient";
 import { dehydrate, QueryClient } from "@tanstack/react-query";

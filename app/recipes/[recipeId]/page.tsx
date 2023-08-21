@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { serverFetch } from "@/src/utilities/serverFetch";
 import SingleRecipePage from "@/src/srcPages/recipes/SingleRecipePage";
 

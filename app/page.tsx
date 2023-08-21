@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import HydrateClient from "@/src/components/wrappers/queryClient/HydrateClient";
 import HomePage from "@/src/srcPages/HomePage";
 import { QueryClient, dehydrate } from "@tanstack/react-query";

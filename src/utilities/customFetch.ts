@@ -56,6 +56,9 @@ export const customFetch = async (
         ...(token ? { Authorization: token } : {}),
       },
       cache: "no-store",
+      next: {
+        revalidate: 0,
+      },
     });
     const data =
       options?.json === false ? await response.text() : await response.json();

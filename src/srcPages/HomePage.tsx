@@ -119,11 +119,11 @@ const HomePage = ({}: HomePageProps) => {
         </Link>
         {recipes?.map((recipe: Recipe) => (
           <Link
-            className="border-2 border-black rounded-lg h-[150px] max-w-[150px] w-full flex justify-center items-center hover:border-black/80 text-black/80"
+            className="border-2 border-black rounded-lg h-[150px] max-w-[150px] w-full flex justify-center items-center hover:border-black/80 text-black/80 p-1"
             href={`/recipes/${recipe.id}`}
             key={recipe.id}
           >
-            <div>{recipe.name}</div>
+            <div className="text-center line-clamp-3">{recipe.name}</div>
           </Link>
         ))}
       </div>
